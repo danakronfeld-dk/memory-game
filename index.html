@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Memory Game</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -21,280 +16,57 @@
             justify-content: center;
             padding: 20px;
         }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 20px;
-            color: white;
-            font-size: 1.2em;
-        }
-
-        .stat {
-            background: rgba(255,255,255,0.2);
-            padding: 10px 25px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            font-weight: bold;
-        }
-
-        .game-board {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
+        .container { max-width: 800px; width: 100%; }
+        .header { text-align: center; margin-bottom: 30px; color: white; }
+        .header h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; color: white; font-size: 1.2em; }
+        .stat { background: rgba(255,255,255,0.2); padding: 10px 25px; border-radius: 15px; backdrop-filter: blur(10px); font-weight: bold; }
+        .game-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 30px; }
         .card {
-            aspect-ratio: 1;
-            background: transparent;
-            border-radius: 15px;
-            cursor: pointer;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
+            aspect-ratio: 1; background: transparent; border-radius: 15px; cursor: pointer;
+            position: relative; transform-style: preserve-3d; transition: transform 0.6s;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
-
-        .card:hover:not(.flipped):not(.matched) {
-            transform: translateY(-5px);
-        }
-
-        .card.flipped {
-            transform: rotateY(180deg);
-        }
-        
-        .card.flipped:hover {
-             transform: rotateY(180deg);
-        }
-
-        /* ✅ FIXED GREY CARDS! */
-        .card.matched {
-            background: #e0e0e0 !important;
-            pointer-events: none;
-        }
-
-        .card.matched .card-front {
-            background: #e0e0e0 !important;
-            opacity: 0.7;
-        }
-
+        .card:hover:not(.flipped):not(.matched) { transform: translateY(-5px); }
+        .card.flipped { transform: rotateY(180deg); }
+        .card.matched { background: #e0e0e0 !important; pointer-events: none; }
+        .card.matched .card-front { background: #e0e0e0 !important; opacity: 0.7; }
         .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 15px;
-            overflow: hidden; 
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; align-items: center; justify-content: center; border-radius: 15px; overflow: hidden;
         }
-
-        .card-back {
-            background: linear-gradient(135deg, #8994fa 0%, #8a60c8 100%);
-            font-size: 3em;
-            color: white;
-        }
-
-        .card-front {
-            background: #fff; 
-            transform: rotateY(180deg);
-        }
-
-        .card-front img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
+        .card-back { background: linear-gradient(135deg, #8994fa 0%, #8a60c8 100%); font-size: 3em; color: white; }
+        .card-front { background: #fff; transform: rotateY(180deg); }
+        .card-front img { width: 100%; height: 100%; object-fit: cover; }
+        .controls { display: flex; justify-content: center; gap: 20px; }
         button {
-            padding: 15px 40px;
-            font-size: 1.1em;
-            border: none;
-            border-radius: 25px;
-            background: white;
-            color: #667eea;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            padding: 15px 40px; font-size: 1.1em; border: none; border-radius: 25px;
+            background: white; color: #667eea; font-weight: bold; cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        
-        button.secondary {
-            background: rgba(255, 255, 255, 0.7);
-            color: #764ba2;
+        button.secondary { background: rgba(255,255,255,0.7); color: #764ba2; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .win-message, .help-modal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            background: white; border-radius: 20px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            transition: transform 0.3s; z-index: 1000; padding: 40px;
         }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .win-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: white;
-            padding: 40px 60px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
-            z-index: 1000;
-        }
-
-        .win-message.show {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .win-message h2 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .win-message p {
-            font-size: 1.3em;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
-        .help-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: white;
-            padding: 30px 40px;
-            border-radius: 20px;
-            text-align: left;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
-            z-index: 1000;
-            max-width: 90%;
-            width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .help-modal.show {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .help-modal h2 {
-            text-align: center;
-            color: #667eea;
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        .help-modal h3 {
-            color: #764ba2;
-            font-size: 1.4em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-
-        .help-modal p, .help-modal li {
-            font-size: 1em;
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .help-modal ol {
-            padding-left: 20px;
-        }
-
-        .help-modal ol ul {
-            margin-top: 10px;
-            list-style-type: disc;
-        }
-        
-        .help-modal strong {
-            color: #555;
-        }
-
-        .help-modal button {
-            display: block;
-            margin: 30px auto 0;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-            z-index: 999;
-        }
-
-        .overlay.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        @media (max-width: 600px) {
-            .game-board {
-                gap: 10px;
-            }
-            .header h1 {
-                font-size: 2.5em;
-            }
-            .container {
-                padding: 10px;
-            }
-        }
+        .win-message.show, .help-modal.show { transform: translate(-50%, -50%) scale(1); }
+        .win-message h2 { color: #667eea; font-size: 2.5em; margin-bottom: 20px; }
+        .help-modal h2 { color: #667eea; font-size: 2em; margin-bottom: 20px; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 999; }
+        .overlay.show { opacity: 1; pointer-events: all; }
+        @media (max-width: 600px) { .game-board { gap: 10px; } .header h1 { font-size: 2.5em; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>💖 Family Memory Game</h1>
-        </div>
-        
+        <div class="header"><h1>💖 Family Memory Game</h1></div>
         <div class="stats">
             <div class="stat">Moves: <span id="moves">0</span></div>
             <div class="stat">Time: <span id="time">0</span>s</div>
         </div>
-        
         <div class="game-board" id="gameBoard"></div>
-        
         <div class="controls">
             <button onclick="resetGame()">New Game</button>
             <button class="secondary" onclick="showHelp()">Help</button>
@@ -304,43 +76,32 @@
     <div class="overlay" id="overlay"></div>
     <div class="win-message" id="winMessage">
         <h2>🎉 Congratulations!</h2>
-        <p>You won in <span id="finalMoves"></span> moves and <span id="finalTime"></span> seconds!</p>
+        <p>You won in <span id="finalMoves">0</span> moves and <span id="finalTime">0</span> seconds!</p>
         <button onclick="resetGame()">Play Again</button>
     </div>
 
     <div class="help-modal" id="helpModal">
         <h2>🎮 How to Play</h2>
         <p>Match your Swiss Alps family photos! 🏔️</p>
-        
-        <h3>🎯 Rules</h3>
         <ol>
             <li>Click cards to flip</li>
-            <li>Match pairs → **They turn GREY!** 🎨</li>
+            <li>Match pairs → <strong>They turn GREY!</strong> 🎨</li>
             <li>Find all 5 pairs to win!</li>
         </ol>
-        
         <button onclick="closeHelp()">Got It! 🎉</button>
     </div>
 
     <script>
         const cardImages = [
-            'family-group-swiss-alps.jpg',    
-            'daughter-window-view.jpg',      
-            'mom-sunglasses-smile.jpg',      
-            'teen-daughter-sunglasses.jpg',  
-            'youngest-daughter-smile.jpg'    
+            'family-group-swiss-alps.jpg',
+            'daughter-window-view.jpg',
+            'mom-sunglasses-smile.jpg',
+            'teen-daughter-sunglasses.jpg',
+            'youngest-daughter-smile.jpg'
         ];
         
         let cards = [...cardImages, ...cardImages];
-        let flippedCards = [];
-        let matchedPairs = 0;
-        let moves = 0;
-        let time = 0;
-        let timer = null;
-        let canFlip = true;
-
-        const helpModal = document.getElementById('helpModal');
-        const overlay = document.getElementById('overlay');
+        let flippedCards = []; let matchedPairs = 0; let moves = 0; let time = 0; let timer = null; let canFlip = true;
 
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -351,36 +112,32 @@
         }
 
         function startTimer() {
-            if (!timer) {
-                timer = setInterval(() => {
-                    time++;
-                    document.getElementById('time').textContent = time;
-                }, 1000);
-            }
+            if (!timer) timer = setInterval(() => { time++; document.getElementById('time').textContent = time; }, 1000);
         }
 
-        function stopTimer() {
-            clearInterval(timer);
-            timer = null;
-        }
+        function stopTimer() { clearInterval(timer); timer = null; }
 
         function createBoard() {
             const gameBoard = document.getElementById('gameBoard');
             gameBoard.innerHTML = '';
             const shuffledCards = shuffle([...cards]);
             
-            shuffledCards.forEach((imageUrl, index) => {
+            shuffledCards.forEach((imageUrl) => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.dataset.image = imageUrl;
-                card.dataset.index = index;
                 
                 card.innerHTML = `
                     <div class="card-back">?</div>
                     <div class="card-front">
-                        <img src="${imageUrl}" alt="Family Photo">
+                        <img src="${imageUrl}" alt="Family Photo" style="display:none;">
+                        <div style="width:100%;height:100%;background:#ccc;display:flex;align-items:center;justify-content:center;font-size:14px;color:#999;">Family Photo</div>
                     </div>
                 `;
+                
+                const img = card.querySelector('img');
+                img.onload = () => { img.style.display = 'block'; img.nextElementSibling.style.display = 'none'; };
+                img.onerror = () => { img.style.display = 'none'; img.nextElementSibling.style.display = 'flex'; };
                 
                 card.addEventListener('click', flipCard);
                 gameBoard.appendChild(card);
@@ -388,42 +145,29 @@
         }
 
         function flipCard() {
-            if (!canFlip) return;
-            if (this.classList.contains('flipped') || this.classList.contains('matched')) return;
-            
+            if (!canFlip || this.classList.contains('flipped') || this.classList.contains('matched')) return;
             startTimer();
-            
             this.classList.add('flipped');
             flippedCards.push(this);
-            
             if (flippedCards.length === 2) {
-                canFlip = false;
-                moves++;
-                document.getElementById('moves').textContent = moves;
-                checkMatch();
+                canFlip = false; moves++; document.getElementById('moves').textContent = moves; checkMatch();
             }
         }
 
         function checkMatch() {
             const [card1, card2] = flippedCards;
             const match = card1.dataset.image === card2.dataset.image;
-            
             setTimeout(() => {
                 if (match) {
                     card1.classList.add('matched');
                     card2.classList.add('matched');
                     matchedPairs++;
-                    
-                    if (matchedPairs === cardImages.length) {
-                        gameWon();
-                    }
+                    if (matchedPairs === cardImages.length) gameWon();
                 } else {
                     card1.classList.remove('flipped');
                     card2.classList.remove('flipped');
                 }
-                
-                flippedCards = [];
-                canFlip = true;
+                flippedCards = []; canFlip = true;
             }, 1000);
         }
 
@@ -431,41 +175,30 @@
             stopTimer();
             document.getElementById('finalMoves').textContent = moves;
             document.getElementById('finalTime').textContent = time;
-            
             setTimeout(() => {
-                overlay.classList.add('show');
+                document.getElementById('overlay').classList.add('show');
                 document.getElementById('winMessage').classList.add('show');
             }, 500);
         }
-        
+
         function showHelp() {
-            overlay.classList.add('show');
-            helpModal.classList.add('show');
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('helpModal').classList.add('show');
         }
 
         function closeHelp() {
-            overlay.classList.remove('show');
-            helpModal.classList.remove('show');
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('helpModal').classList.remove('show');
         }
 
         function resetGame() {
             closeHelp();
             document.getElementById('winMessage').classList.remove('show');
-            overlay.classList.remove('show');
-            
-            flippedCards = [];
-            matchedPairs = 0;
-            moves = 0;
-            time = 0;
-            canFlip = true;
-            
+            document.getElementById('overlay').classList.remove('show');
+            flippedCards = []; matchedPairs = 0; moves = 0; time = 0; canFlip = true;
             document.getElementById('moves').textContent = moves;
             document.getElementById('time').textContent = time;
-            
-            stopTimer();
-            timer = null;
-            
-            createBoard();
+            stopTimer(); createBoard();
         }
 
         createBoard();
