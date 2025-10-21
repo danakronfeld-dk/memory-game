@@ -81,12 +81,7 @@
         .card.flipped {
             transform: rotateY(180deg);
         }
-        
-        .card.flipped:hover {
-             transform: rotateY(180deg);
-        }
 
-        /* ✅ FIXED GREY CARDS! */
         .card.matched {
             background: #e0e0e0 !important;
             pointer-events: none;
@@ -237,15 +232,6 @@
             padding-left: 20px;
         }
 
-        .help-modal ol ul {
-            margin-top: 10px;
-            list-style-type: disc;
-        }
-        
-        .help-modal strong {
-            color: #555;
-        }
-
         .help-modal button {
             display: block;
             margin: 30px auto 0;
@@ -323,12 +309,13 @@
     </div>
 
     <script>
+        // ✅ YOUR SIMPLE PHOTO NAMES!
         const cardImages = [
-            'photo1.jpg',    
-            'photo2.jpg',      
-            'photo3.jpg',      
-            'photo4.jpg',  
-            'photo5.jpg'    
+            'photo1.jpg',
+            'photo2.jpg',
+            'photo3.jpg',
+            'photo4.jpg',
+            'photo5.jpg'
         ];
         
         let cards = [...cardImages, ...cardImages];
@@ -472,4 +459,3 @@
     </script>
 </body>
 </html>
-
