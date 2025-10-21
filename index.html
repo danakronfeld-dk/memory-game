@@ -86,9 +86,15 @@
              transform: rotateY(180deg);
         }
 
+        /* ✅ FIXED GREY CARDS! */
         .card.matched {
-            opacity: 0.6;
+            background: #e0e0e0 !important;
             pointer-events: none;
+        }
+
+        .card.matched .card-front {
+            background: #e0e0e0 !important;
+            opacity: 0.7;
         }
 
         .card-front, .card-back {
@@ -263,7 +269,6 @@
             pointer-events: all;
         }
 
-        /* Responsive adjustments for smaller screens */
         @media (max-width: 600px) {
             .game-board {
                 gap: 10px;
@@ -304,39 +309,26 @@
     </div>
 
     <div class="help-modal" id="helpModal">
-        <h2>🎮 How to Play: The Memory Game</h2>
-        <p>Welcome! This is a fun game to test and improve your memory skills.</p>
+        <h2>🎮 How to Play</h2>
+        <p>Match your Swiss Alps family photos! 🏔️</p>
         
-        <h3>🎯 The Objective</h3>
-        <p>Find all matching pairs of cards in the fewest moves and the shortest time possible.</p>
-        
-        <h3>▶️ How to Play</h3>
+        <h3>🎯 Rules</h3>
         <ol>
-            <li><strong>Start the Game:</strong> The game begins with a grid of face-down cards.</li>
-            <li><strong>Flip a Card:</strong> Click any card to reveal its image.</li>
-            <li><strong>Find a Match:</strong> Click a second card.
-                <ul>
-                    <li>If they match, they stay face-up.</li>
-                    <li>If they don't match, they flip back over. Remember their locations!</li>
-                </ul>
-            </li>
-            <li><strong>Continue Playing:</strong> Keep flipping until all pairs are matched.</li>
+            <li>Click cards to flip</li>
+            <li>Match pairs → **They turn GREY!** 🎨</li>
+            <li>Find all 5 pairs to win!</li>
         </ol>
         
-        <h3>🏆 Winning the Game</h3>
-        <p>You win when all pairs are matched. A message will show your final stats. Click "Play Again" to challenge your score!</p>
-        
-        <button onclick="closeHelp()">Got It!</button>
+        <button onclick="closeHelp()">Got It! 🎉</button>
     </div>
 
     <script>
-        // FIXED: This array now points to the photos you uploaded to your repository.
         const cardImages = [
-            'photo1.jpg',
-            'photo2.jpg',
-            'photo3.jpg',
-            'photo4.jpg',
-            'photo5.jpg'
+            'family-group-swiss-alps.jpg',    
+            'daughter-window-view.jpg',      
+            'mom-sunglasses-smile.jpg',      
+            'teen-daughter-sunglasses.jpg',  
+            'youngest-daughter-smile.jpg'    
         ];
         
         let cards = [...cardImages, ...cardImages];
@@ -476,7 +468,6 @@
             createBoard();
         }
 
-        // Initialize game
         createBoard();
     </script>
 </body>
